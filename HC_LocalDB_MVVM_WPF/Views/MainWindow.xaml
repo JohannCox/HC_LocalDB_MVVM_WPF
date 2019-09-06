@@ -34,13 +34,14 @@
         <!-- File Menu -->
         <Menu DockPanel.Dock="Top" Margin="0,0,0.4,0">
             <MenuItem Header="File">
-                <MenuItem Header="New" Command="{Binding NewCmd}" InputGestureText="Ctrl+N" />
+                <!--<MenuItem Header="New" Command="{Binding NewCmd}" InputGestureText="Ctrl+N" />
                 <MenuItem Header="Open" Command="{Binding OpenCmd}" InputGestureText="Ctrl+O" />
                 <MenuItem Header="Save" Command="{Binding SaveCmd}" InputGestureText="Ctrl+S" />
                 <MenuItem Header="Save As" Command="{Binding SaveAsCmd}" InputGestureText="Ctrl+Shift+S"/>
-                <Separator />
+                <Separator />-->
                 <MenuItem Header="Exit" Command="{Binding ExitCmd}" InputGestureText="Alt+F4"/>
             </MenuItem>
+            <MenuItem Header="_Search" Command="{Binding ShowSearchDialogCmd}" InputGestureText="Ctrl+S"/>
             <MenuItem Header="About" Command="{Binding ShowAboutDialogCmd}"/>
         </Menu>
 

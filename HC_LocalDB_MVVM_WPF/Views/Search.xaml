@@ -1,0 +1,53 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HC_LocalDB_MVVM_WPF.Views"
+        xmlns:utils="clr-namespace:HC_LocalDB_MVVM_WPF.Utils"
+        xmlns:HC_LocalDB_MVVM_WPF="clr-namespace:HC_LocalDB_MVVM_WPF" x:Class="HC_LocalDB_MVVM_WPF.Views.Search"
+        mc:Ignorable="d"
+        Title="Search Database" Height="816.5" Width="700" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <HC_LocalDB_MVVM_WPF:PersonContextDataSet x:Key="personContextDataSet"/>
+        <CollectionViewSource x:Key="peopleViewSource" Source="{Binding Peoples}" Filter="CollectionViewSource_Filter"/>
+
+        <utils:ByteToImageConverter x:Key="ImageConverter"></utils:ByteToImageConverter>
+
+
+    </Window.Resources>
+
+
+    <StackPanel  Margin="20,10,20,10">
+        <TextBlock TextAlignment="Center" Text="{Binding Content}" />
+        <TextBlock TextAlignment="Center" Text="{Binding VersionText}" Margin="0,40,0,0" />
+
+        <StackPanel Orientation="Horizontal" Margin="10,20" HorizontalAlignment="Center">
+            <Label Content="Search/Filter" FontSize="16"></Label>
+            <TextBox x:Name="SearchBox" TextChanged="SearchBox_TextChanged" Text="{Binding SearchBoxed}" Width="300"></TextBox>
+        </StackPanel>
+        <DataGrid x:Name="peopleDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="600" ItemsSource="{Binding Source={StaticResource peopleViewSource}}" Margin="10,0,11.333,0" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="PeopleDataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding id}" Header="id" IsReadOnly="True" Width="Auto"/>
+                <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding LastName}" Header="Last Name" Width="Auto"/>
+                <DataGridTextColumn x:Name="firstNameColumn" Binding="{Binding FirstName}" Header="First Name" Width="Auto"/>
+                <DataGridTextColumn x:Name="ageColumn" Binding="{Binding Age}" Header="Age" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="addressColumn" Binding="{Binding Address}" Header="Address" Width="Auto"/>
+                <DataGridTextColumn x:Name="interestsColumn" Binding="{Binding Interests}" Header="Interests" Width="Auto"/>
+                <!--<DataGridTemplateColumn x:Name="imageColumn" Header="Image" Width="Auto"/>-->
+
+
+                <DataGridTemplateColumn MaxWidth="250" Header="Picture">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Width="50" Margin="5" Source="{Binding Path=ImagesBytes, Converter={StaticResource ImageConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        
+    </StackPanel>
+</Window>

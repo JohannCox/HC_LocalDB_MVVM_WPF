@@ -11,13 +11,19 @@ using System.Windows;
 using System.ComponentModel;
 using HC_LocalDB_MVVM_WPF.ViewModels;
 using HC_LocalDB_MVVM_WPF.Views;
+using HC_LocalDB_MVVM_WPF.Models;
+using HC_LocalDB_MVVM_WPF.Services;
 
 namespace HC_LocalDB_MVVM_WPF
 {
     public partial class App : Application
     {
         private static readonly ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        IPersonRepository _repo;
+
         private static MainWindow app;
+        static byte[] imageBytes { get; set; }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -32,6 +38,8 @@ namespace HC_LocalDB_MVVM_WPF
             app = new MainWindow();
             var context = new MainViewModel();
             app.DataContext = context;
+            DoDB();
+
             app.Show();
 
             if (e.Args.Length == 1) //make sure an argument is passed
@@ -75,5 +83,102 @@ namespace HC_LocalDB_MVVM_WPF
                           "Language: " + computer.InstalledUICulture.EnglishName;
             Log.Info(text);
         }
+
+
+        static void ImageStreamer()
+        {
+            byte[] imageStream;
+            imageStream = System.IO.File.ReadAllBytes(@"./DB/me.jpg");
+            imageBytes = imageStream;
+        }
+
+        public static void DoDB()
+        {
+            ImageStreamer();
+
+            //  var dbConnection = Configuration.GetConnectionString("DBConn");
+
+
+            using (var db = new PersonContext())
+            {
+                List<Person> lsPerson = new List<Person>();
+                lsPerson.AddRange(new[]
+                {
+                    new Person()
+                    {
+                        LastName = "Cox",
+                        FirstName = "Johann",
+                        Age = 30,
+                        Address = "200 Heywood Ave, Spartanburg, SC 29304",
+                        Interests = "Hiking, Biking, Cloud Watching",
+                        ImagesBytes = imageBytes
+                    },
+                    new Person()
+                    {
+                        LastName = "Crane",
+                        FirstName = "Miles",
+                        Age = 30,
+                        Address = "30 Marvin Ave, Spartanburg, SC 29304",
+                        Interests = "Psy-Awards, NIMH",
+                        ImagesBytes = null
+                    },
+                    new Person()
+                    {
+                      LastName = "Boggs",
+                        FirstName = "Xavier",
+                        Age = 21,
+                        Address = "902 Westbury Rd, Boiling Springs, SC 29304",
+                        Interests = "Weedeating, Mulching, Worm-husbandry",
+                        ImagesBytes = imageBytes
+                    },
+                    new Person()
+                    {
+                        LastName = "Parnth",
+                        FirstName = "Ivan",
+                        Age = 45,
+                        Address = "1402 Gypsy Wood Way, Greenville, SC 29316",
+                        Interests = "Axe-throwing, Spas, and deep thoughts",
+                        ImagesBytes = imageBytes
+                    },
+                    new Person()
+                    {
+                        LastName = "Zipster",
+                        FirstName = "Ace",
+                        Age = 99,
+                        Address = "1 Barkley Circle, Spartanburg, SC 29304",
+                        Interests = "Fast Cars, Fast Planes, Fiber",
+                        ImagesBytes = imageBytes
+                    },
+
+                });
+
+                if (db.People.Count<Person>() >= 6)
+                {
+                    var f = db.People.Count<Person>();
+                    FormattableString sql = $"truncate table People;";
+                    var b = db.Database.ExecuteSqlCommand(sql.ToString());
+      
+                    sql = $"select  top 10 * from People;";
+
+                    List<Person> GetPeople =  db.People.SqlQuery(sql.ToString()).ToList<Person>();
+
+                    if (!GetPeople.Any(p => p.FirstName.ToLowerInvariant() == "johann" ))
+                    {
+                        db.People.AddRange(lsPerson);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    var f = db.People.Count<Person>();
+                    db.People.AddRange(lsPerson);
+                    db.SaveChanges();
+                    FormattableString sql = $"select  top 10 * from People;";
+                    List<Person> GetPeople = db.People.SqlQuery(sql.ToString()).ToList<Person>();
+                }
+        
+            }
+        }
+
     }
 }

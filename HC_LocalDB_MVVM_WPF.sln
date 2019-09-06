@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HC_LocalDB_MVVM_WPF", "HC_LocalDB_MVVM_WPF\HC_LocalDB_MVVM_WPF.csproj", "{62C5F75B-D4EE-42F7-9379-F42B2AA03EB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HC_LocalDB_MVVM_WPFTests", "HC_LocalDB_MVVM_WPFTests\HC_LocalDB_MVVM_WPFTests.csproj", "{765F6A65-F823-447E-B3B1-60BA1AA65590}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{62C5F75B-D4EE-42F7-9379-F42B2AA03EB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62C5F75B-D4EE-42F7-9379-F42B2AA03EB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62C5F75B-D4EE-42F7-9379-F42B2AA03EB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{765F6A65-F823-447E-B3B1-60BA1AA65590}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{765F6A65-F823-447E-B3B1-60BA1AA65590}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{765F6A65-F823-447E-B3B1-60BA1AA65590}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{765F6A65-F823-447E-B3B1-60BA1AA65590}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Xml.Linq;
 using HC_LocalDB_MVVM_WPF.Views;
 using HC_LocalDB_MVVM_WPF.Utils;
+using HC_LocalDB_MVVM_WPF.Services;
 
 namespace HC_LocalDB_MVVM_WPF.ViewModels
 {
@@ -52,6 +53,7 @@ namespace HC_LocalDB_MVVM_WPF.ViewModels
         public ICommand NewCmd { get { return new RelayCommand(OnNewTest, AlwaysFalse); } }
         public ICommand OpenCmd { get { return new RelayCommand(OnOpenTest, AlwaysFalse); } }
         public ICommand ShowAboutDialogCmd { get { return new RelayCommand(OnShowAboutDialog, AlwaysTrue); } }
+        public ICommand ShowSearchDialogCmd { get { return new RelayCommand(OnShowSearchDialog, AlwaysTrue); } }
         public ICommand ExitCmd { get { return new RelayCommand(OnExitApp, AlwaysTrue); } }
 
         private bool AlwaysTrue() { return true; }
@@ -109,6 +111,17 @@ namespace HC_LocalDB_MVVM_WPF.ViewModels
             AboutViewModel dialog = new AboutViewModel();
             var result = DialogService.ShowDialog<About>(this, dialog);
         }
+
+
+        private void OnShowSearchDialog()
+        {
+            Log.Info("Opening Search dialog");
+            SearchViewModel dialog = new SearchViewModel();
+            var result = DialogService.ShowDialog<Search>(this, dialog);
+        }
+
+
+
         private void OnExitApp()
         {
             System.Windows.Application.Current.MainWindow.Close();
