@@ -177,6 +177,7 @@ namespace HC_LocalDB_MVVM_WPF
                 int counter = 400;
                 for (int i=0; i< counter; i++)
                 {
+                    lsPerson.ForEach(p => p.LastName = i + "-" + p.LastName);
                     db.People.AddRange(lsPerson);
                     db.SaveChanges();
                 }

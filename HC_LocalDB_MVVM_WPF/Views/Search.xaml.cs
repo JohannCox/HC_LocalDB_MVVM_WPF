@@ -25,17 +25,18 @@ namespace HC_LocalDB_MVVM_WPF.Views
     /// </summary>
     public partial class Search : Window //, IPersonRepository
     {
+        private SearchViewModel searchViewModel { get; set; }
+
         public Search()
         {
             InitializeComponent();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            searchViewModel = DataContext as SearchViewModel;
         }
 
         public string MultiColumnFilter { get; set; } = "";
-        //public int FilteredCount { get; set; } = 0;
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -45,14 +46,10 @@ namespace HC_LocalDB_MVVM_WPF.Views
             binding.UpdateSource();
           peopleDataGrid.Items.Refresh();
 
-            //            DataGrid dg = peopleDataGrid;
-            //            dg.UpdateLayout();
-
-            //CollectionViewSource.GetDefaultView(counterTextBlock.Text).Refresh();
-
             CollectionViewSource.GetDefaultView(counterTextBlock.Text = ((HC_LocalDB_MVVM_WPF.ViewModels.SearchViewModel)binding.DataItem).FilteredCount);
 
             CollectionViewSource.GetDefaultView(peopleDataGrid.ItemsSource).Refresh();
+            UpdateDatagridSource();
         }
 
          private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
@@ -123,16 +120,35 @@ namespace HC_LocalDB_MVVM_WPF.Views
             if (searchViewModel != null)
             {
                 searchViewModel.PageNum++;
+
+                UpdateDatagridSource();
+
             }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            SearchViewModel searchViewModel = this.DataContext as SearchViewModel;
-            if (searchViewModel != null && searchViewModel.PageNum > 2)
+           // SearchViewModel searchViewModel = this.DataContext as SearchViewModel;
+            if (searchViewModel != null && searchViewModel.PageNum >= 2)
             {
                 searchViewModel.PageNum--;
+                UpdateDatagridSource();
             }
+        }
+
+        private void UpdateDatagridSource()
+        {
+          // searchViewModel = this.DataContext as SearchViewModel;
+            peopleDataGrid.ItemsSource = searchViewModel.Peoples;
+
+            peopleDataGrid.Items.Refresh();
+            CollectionViewSource.GetDefaultView(peopleDataGrid.ItemsSource).Refresh();
+        }
+
+        private void PeopleDataGrid_SourceUpdated(object sender, DataTransferEventArgs e)
+        {
+            var a = sender;
+            var b = e;
         }
     }
 }

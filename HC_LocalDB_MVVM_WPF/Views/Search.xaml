@@ -52,7 +52,7 @@
 
     
 
-        <DataGrid x:Name="peopleDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" Width="Auto" ItemsSource="{Binding Source={StaticResource peopleViewSource}}" Margin="10,0,11.333,0" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="PeopleDataGrid_SelectionChanged"
+        <DataGrid x:Name="peopleDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" Width="Auto" SourceUpdated="PeopleDataGrid_SourceUpdated" ItemsSource="{Binding Source={StaticResource peopleViewSource}}" Margin="10,0,11.333,0" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="PeopleDataGrid_SelectionChanged"
                   HorizontalScrollBarVisibility="Visible">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding id}" Header="id" IsReadOnly="True" Width="Auto"/>
@@ -74,8 +74,28 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        
-    </StackPanel>
+
+            <StackPanel Orientation="Vertical" Height="38" Background="LightSeaGreen">
+                <StackPanel Orientation="Horizontal" Height="30" Margin="0,4"  HorizontalAlignment="Center" VerticalAlignment="Center">
+
+
+                    <Button x:Name="BackButton2" Click="BackButton_Click" Margin="25,0">
+                        <Label Margin="0" Padding="4,1" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Height="20">&#x23F4; Previous</Label>
+                    </Button>
+                    <Label VerticalAlignment="Center" Height="25" Width="Auto"  Padding="1,2" Margin="0,2,0,2" Content="Page:  " 
+                FontWeight="Bold"/>
+                    <TextBlock x:Name="counterTextBlock2" VerticalAlignment="Center" Height="25" Width="Auto" Padding="1,2" Margin="0,2" TextAlignment="Left" Text="{Binding PageNum}" FontWeight="Bold">
+                    </TextBlock>
+                    <TextBlock VerticalAlignment="Center" Height="25" Width="Auto" Padding="1,2" Margin="0,2" TextAlignment="Left" 
+                Text="{Binding TotalCount}" FontWeight="Bold"></TextBlock>
+                    <Button x:Name="ForwardButton2" Click="ForwardButton_Click" Margin="25,0">
+                        <Label Margin="0" Padding="4,1" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Height="20">Next &#x23F5;</Label>
+                    </Button>
+                </StackPanel>
+
+            </StackPanel>
+
+        </StackPanel>
     </ScrollViewer>
   
 </Window>

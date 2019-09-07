@@ -48,7 +48,7 @@ namespace HC_LocalDB_MVVM_WPF.Services
                 sql = $"select * FROM(SELECT ROW_NUMBER() OVER (ORDER BY Id) row_num, Id, LastName,FirstName, Age, [Address], Interests, ImagesBytes from People) t Where row_num >= {startRowIndex} and row_num<({startRowIndex} + {maximumRows})";
             }
 
-            // var b = (_context.People.SqlQuery(sql.ToString())).ToList<Person>(); 
+             var b = (_context.People.SqlQuery(sql.ToString())).ToList<Person>(); 
             return (_context.People.SqlQuery(sql.ToString())).ToList<Person>();  // _context.People.ToList<Person>();
         }
 
