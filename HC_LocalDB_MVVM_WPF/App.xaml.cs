@@ -20,8 +20,6 @@ namespace HC_LocalDB_MVVM_WPF
     {
         private static readonly ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        IPersonRepository _repo;
-
         private static MainWindow app;
         static byte[] imageBytes { get; set; }
 
@@ -63,9 +61,9 @@ namespace HC_LocalDB_MVVM_WPF
             // Show a message before closing application
             var dialogService = new MvvmDialogs.DialogService();
             dialogService.ShowMessageBox((INotifyPropertyChanged)(app.DataContext),
-                "Oops, something went wrong and the application must close. Please find a " +
-                "report on the issue at: " + path + Environment.NewLine +
-                "If the problem persist, please contact JCOX.",
+                "A Unrecoverable Error has occured the application must close. Please review the " +
+                "Log concerning the problem at: " + path + Environment.NewLine +
+                "If the problem persist, please contact Support.",
                 "Unhandled Error",
                 MessageBoxButton.OK);
 
@@ -176,7 +174,13 @@ namespace HC_LocalDB_MVVM_WPF
                     FormattableString sql = $"select  top 10 * from People;";
                     List<Person> GetPeople = db.People.SqlQuery(sql.ToString()).ToList<Person>();
                 }
-        
+                int counter = 400;
+                for (int i=0; i< counter; i++)
+                {
+                    db.People.AddRange(lsPerson);
+                    db.SaveChanges();
+                }
+      
             }
         }
 

@@ -15,6 +15,7 @@ using System.Xml.Linq;
 using HC_LocalDB_MVVM_WPF.Views;
 using HC_LocalDB_MVVM_WPF.Utils;
 using HC_LocalDB_MVVM_WPF.Services;
+using System.Runtime.InteropServices;
 
 namespace HC_LocalDB_MVVM_WPF.ViewModels
 {
@@ -127,6 +128,43 @@ namespace HC_LocalDB_MVVM_WPF.ViewModels
             System.Windows.Application.Current.MainWindow.Close();
         }
         #endregion
+
+        public string Content
+        {
+            get
+            {
+                var thanks = String.IsNullOrEmpty(Environment.UserName) ? "" : String.Format("Thank you {0} for your review.", Environment.UserName);
+
+                return "HC_LocalDB_MVVM_WPF" + Environment.NewLine +
+                        "Created by Johann Cox  -  2019" + Environment.NewLine +
+                        "(864)804-8046" + Environment.NewLine +
+                        Environment.NewLine +
+                        "Templates, Libraries and Frameworks:" + Environment.NewLine +
+                        "WPFApp with MVVM," + Environment.NewLine +
+                        "Entity Framework v6.2," + Environment.NewLine +
+                        "Log4Net v2.0.8," + Environment.NewLine +
+                        "Extended.WPF.Toolkit v3.0.0," + Environment.NewLine + 
+                        "MvvmDialogs v4.0.0" +
+                        Environment.NewLine +
+                        Environment.NewLine + thanks;
+
+            }
+        }
+
+        public string VersionText
+        {
+            get
+            {
+                var version1 = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
+                // For external assemblies
+                var ver2 = typeof(_Assembly).Assembly.GetName().Version;
+                var ver3 = typeof(Assembly).Assembly.GetName().Version;
+
+                return "HC_LocalDB_MVVM_WPF v" + version1.ToString();
+            }
+        }
+
 
         #region Events
 

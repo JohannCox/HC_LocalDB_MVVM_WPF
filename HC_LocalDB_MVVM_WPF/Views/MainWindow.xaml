@@ -11,7 +11,7 @@
         xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         md:DialogServiceViews.IsRegistered="True"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="350" Width="525"
+        Title="{Binding Title}" Height="768" Width="1024"
         WindowState="Normal">
 
     <Window.Resources>
@@ -45,8 +45,10 @@
             <MenuItem Header="About" Command="{Binding ShowAboutDialogCmd}"/>
         </Menu>
 
-        <StackPanel>
-            <!-- Place here your content -->
+
+        <StackPanel  Margin="20,10,20,10">
+            <TextBlock TextAlignment="Center" Text="{Binding Content}" />
+            <TextBlock TextAlignment="Center" Text="{Binding VersionText}" Margin="0,40,0,0" />
         </StackPanel>
     </DockPanel>
 </Window>

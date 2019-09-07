@@ -1,7 +1,9 @@
 ﻿using HC_LocalDB_MVVM_WPF.Models;
 using HC_LocalDB_MVVM_WPF.Services;
+using HC_LocalDB_MVVM_WPF.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -33,27 +35,38 @@ namespace HC_LocalDB_MVVM_WPF.Views
         }
 
         public string MultiColumnFilter { get; set; } = "";
+        //public int FilteredCount { get; set; } = 0;
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var binding = ((TextBox)sender).GetBindingExpression(TextBox.TextProperty);
             MultiColumnFilter = ((TextBox)sender).Text;
-            //binding.UpdateSource();
-            //peopleDataGrid.Items.Refresh();
-            // Refresh the view to apply filters.
+
+            binding.UpdateSource();
+          peopleDataGrid.Items.Refresh();
+
+            //            DataGrid dg = peopleDataGrid;
+            //            dg.UpdateLayout();
+
+            //CollectionViewSource.GetDefaultView(counterTextBlock.Text).Refresh();
+
+            CollectionViewSource.GetDefaultView(counterTextBlock.Text = ((HC_LocalDB_MVVM_WPF.ViewModels.SearchViewModel)binding.DataItem).FilteredCount);
+
             CollectionViewSource.GetDefaultView(peopleDataGrid.ItemsSource).Refresh();
         }
 
          private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
         {
+            
             Person t = e.Item as Person;
-            if (t != null)
+            if (t != null && MultiColumnFilter != "")
             {
                 if (t.LastName.ToLowerInvariant().Contains(MultiColumnFilter.ToLowerInvariant()) || t.FirstName.ToLowerInvariant().Contains(MultiColumnFilter.ToLowerInvariant()))
                     e.Accepted = true;
                 else
                     e.Accepted = false;
             }
+
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -101,6 +114,24 @@ namespace HC_LocalDB_MVVM_WPF.Views
             object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        private void ForwardButton_Click(object sender, RoutedEventArgs e)
+        {
+            SearchViewModel searchViewModel = this.DataContext as SearchViewModel;
+            if (searchViewModel != null)
+            {
+                searchViewModel.PageNum++;
+            }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            SearchViewModel searchViewModel = this.DataContext as SearchViewModel;
+            if (searchViewModel != null && searchViewModel.PageNum > 2)
+            {
+                searchViewModel.PageNum--;
             }
         }
     }
