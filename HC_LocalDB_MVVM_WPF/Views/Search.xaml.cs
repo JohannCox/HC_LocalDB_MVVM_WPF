@@ -46,7 +46,7 @@ namespace HC_LocalDB_MVVM_WPF.Views
             binding.UpdateSource();
           peopleDataGrid.Items.Refresh();
 
-            CollectionViewSource.GetDefaultView(counterTextBlock.Text = ((HC_LocalDB_MVVM_WPF.ViewModels.SearchViewModel)binding.DataItem).FilteredCount);
+            //CollectionViewSource.GetDefaultView(counterTextBlock.Text = ((HC_LocalDB_MVVM_WPF.ViewModels.SearchViewModel)binding.DataItem).FilteredCount);
 
             CollectionViewSource.GetDefaultView(peopleDataGrid.ItemsSource).Refresh();
             UpdateDatagridSource();
@@ -122,13 +122,11 @@ namespace HC_LocalDB_MVVM_WPF.Views
                 searchViewModel.PageNum++;
 
                 UpdateDatagridSource();
-
             }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-           // SearchViewModel searchViewModel = this.DataContext as SearchViewModel;
             if (searchViewModel != null && searchViewModel.PageNum >= 2)
             {
                 searchViewModel.PageNum--;
@@ -138,8 +136,14 @@ namespace HC_LocalDB_MVVM_WPF.Views
 
         private void UpdateDatagridSource()
         {
-          // searchViewModel = this.DataContext as SearchViewModel;
             peopleDataGrid.ItemsSource = searchViewModel.Peoples;
+
+            // PageNumber
+            PageNumTextBlock1.Text = searchViewModel.PageNum.ToString();
+            PageNumTextBlock2.Text = searchViewModel.PageNum.ToString();
+            // Total Pages
+            TotalCountTextBlock1.Text = searchViewModel.TotalCount.ToString();
+            TotalCountTextBlock2.Text = searchViewModel.TotalCount.ToString();
 
             peopleDataGrid.Items.Refresh();
             CollectionViewSource.GetDefaultView(peopleDataGrid.ItemsSource).Refresh();
@@ -147,8 +151,7 @@ namespace HC_LocalDB_MVVM_WPF.Views
 
         private void PeopleDataGrid_SourceUpdated(object sender, DataTransferEventArgs e)
         {
-            var a = sender;
-            var b = e;
+
         }
     }
 }

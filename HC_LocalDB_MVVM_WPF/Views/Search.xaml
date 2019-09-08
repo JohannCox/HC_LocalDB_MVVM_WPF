@@ -31,50 +31,47 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Height="38" Background="LightSeaGreen">
-            <StackPanel Orientation="Horizontal" Height="30" Margin="0,4"  HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Vertical" Height="38" Background="LightSeaGreen">
+                <StackPanel Orientation="Horizontal" Height="30" Margin="0,4"  HorizontalAlignment="Center" VerticalAlignment="Center">
 
 
-                <Button x:Name="BackButton" Click="BackButton_Click" Margin="25,0">
-                <Label Margin="0" Padding="4,1" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Height="20">&#x23F4; Previous</Label> </Button>
-                <Label VerticalAlignment="Center" Height="25" Width="Auto"  Padding="1,2" Margin="0,2,0,2" Content="Records Shown:  " 
+                    <Button x:Name="BackButton" Click="BackButton_Click" Margin="25,0">
+                        <Label Margin="0" Padding="4,1" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Height="20">&#x23F4; Previous</Label>
+                    </Button>
+                    <Label VerticalAlignment="Center" Height="25" Width="Auto"  Padding="1,2" Margin="0,2,0,2" Content="Page:  " 
                 FontWeight="Bold"/>
-                <TextBlock x:Name="counterTextBlock" VerticalAlignment="Center" Height="25" Width="Auto" Padding="1,2" Margin="0,2" TextAlignment="Left" Text="{Binding FilteredCount}" FontWeight="Bold">
-                </TextBlock>
-                <TextBlock VerticalAlignment="Center" Height="25" Width="Auto" Padding="1,2" Margin="0,2" TextAlignment="Left" 
-                Text="{Binding TotalCount}" FontWeight="Bold"></TextBlock>
+                    <TextBlock x:Name="PageNumTextBlock1" VerticalAlignment="Center" Height="25" Width="Auto" Padding="1,2" Margin="0,2" TextAlignment="Left" Text="{Binding PageNum}" FontWeight="Bold">
+                    </TextBlock>
+                    <TextBlock x:Name="TotalCountTextBlock1" VerticalAlignment="Center" Height="25" Width="Auto" Padding="1,2" Margin="0,2" TextAlignment="Left" Text="{Binding TotalCount}" FontWeight="Bold"></TextBlock>
                     <Button x:Name="ForwardButton" Click="ForwardButton_Click" Margin="25,0">
                         <Label Margin="0" Padding="4,1" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Height="20">Next &#x23F5;</Label>
                     </Button>
                 </StackPanel>
-            
-        </StackPanel>
 
-    
-
-        <DataGrid x:Name="peopleDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" Width="Auto" SourceUpdated="PeopleDataGrid_SourceUpdated" ItemsSource="{Binding Source={StaticResource peopleViewSource}}" Margin="10,0,11.333,0" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="PeopleDataGrid_SelectionChanged"
+            </StackPanel>
+            <DataGrid x:Name="peopleDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" Height="Auto" Width="Auto" SourceUpdated="PeopleDataGrid_SourceUpdated" ItemsSource="{Binding Source={StaticResource peopleViewSource}}" Margin="10,0,11.333,0" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="PeopleDataGrid_SelectionChanged"
                   HorizontalScrollBarVisibility="Visible">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="idColumn" Binding="{Binding id}" Header="id" IsReadOnly="True" Width="Auto"/>
-                <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding LastName}" Header="Last Name" Width="Auto"/>
-                <DataGridTextColumn x:Name="firstNameColumn" Binding="{Binding FirstName}" Header="First Name" Width="Auto"/>
-                <DataGridTextColumn x:Name="ageColumn" Binding="{Binding Age}" Header="Age" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="addressColumn" Binding="{Binding Address}" Header="Address" Width="Auto"/>
-                <DataGridTextColumn x:Name="interestsColumn" Binding="{Binding Interests}" Header="Interests" Width="Auto"/>
-                <!--<DataGridTemplateColumn x:Name="imageColumn" Header="Image" Width="Auto"/>-->
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="idColumn" Binding="{Binding id}" Header="id" IsReadOnly="True" Width="Auto"/>
+                    <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding LastName}" Header="Last Name" Width="SizeToCells"/>
+                    <DataGridTextColumn x:Name="firstNameColumn" Binding="{Binding FirstName}" Header="First Name" Width="SizeToCells"/>
+                    <DataGridTextColumn x:Name="ageColumn" Binding="{Binding Age}" Header="Age" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="addressColumn" Binding="{Binding Address}" Header="Address" Width="SizeToCells"/>
+                    <DataGridTextColumn x:Name="interestsColumn" Binding="{Binding Interests}" Header="Interests" Width="Auto"/>
+                    <!--<DataGridTemplateColumn x:Name="imageColumn" Header="Image" Width="Auto"/>-->
 
 
-                <DataGridTemplateColumn MaxWidth="250" Header="Picture">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Width="50" Margin="5" Source="{Binding Path=ImagesBytes, Converter={StaticResource ImageConverter}}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTemplateColumn MaxWidth="250" Header="Picture">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Width="50" Margin="5" Source="{Binding Path=ImagesBytes, Converter={StaticResource ImageConverter}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-            </DataGrid.Columns>
-        </DataGrid>
-
+                </DataGrid.Columns>
+            </DataGrid>
+              
             <StackPanel Orientation="Vertical" Height="38" Background="LightSeaGreen">
                 <StackPanel Orientation="Horizontal" Height="30" Margin="0,4"  HorizontalAlignment="Center" VerticalAlignment="Center">
 
@@ -84,10 +81,9 @@
                     </Button>
                     <Label VerticalAlignment="Center" Height="25" Width="Auto"  Padding="1,2" Margin="0,2,0,2" Content="Page:  " 
                 FontWeight="Bold"/>
-                    <TextBlock x:Name="counterTextBlock2" VerticalAlignment="Center" Height="25" Width="Auto" Padding="1,2" Margin="0,2" TextAlignment="Left" Text="{Binding PageNum}" FontWeight="Bold">
+                    <TextBlock x:Name="PageNumTextBlock2" VerticalAlignment="Center" Height="25" Width="Auto" Padding="1,2" Margin="0,2" TextAlignment="Left" Text="{Binding PageNum}" FontWeight="Bold">
                     </TextBlock>
-                    <TextBlock VerticalAlignment="Center" Height="25" Width="Auto" Padding="1,2" Margin="0,2" TextAlignment="Left" 
-                Text="{Binding TotalCount}" FontWeight="Bold"></TextBlock>
+                    <TextBlock x:Name="TotalCountTextBlock2" VerticalAlignment="Center" Height="25" Width="Auto" Padding="1,2" Margin="0,2" TextAlignment="Left" Text="{Binding TotalCount}" FontWeight="Bold"></TextBlock>
                     <Button x:Name="ForwardButton2" Click="ForwardButton_Click" Margin="25,0">
                         <Label Margin="0" Padding="4,1" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" Height="20">Next &#x23F5;</Label>
                     </Button>

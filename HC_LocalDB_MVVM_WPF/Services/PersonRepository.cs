@@ -36,20 +36,35 @@ namespace HC_LocalDB_MVVM_WPF.Services
         /// <param name="maximumRows"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public List<Person> GetPeopleByPages(int startRowIndex, int maximumRows, string filter)
+        public PagedRecInfo GetPeopleByPages(int startRowIndex, int maximumRows, string filter)
         {
             FormattableString sql = $"";
+            FormattableString sqlTotalRows = $"";
+
             if (!String.IsNullOrEmpty(filter))
             {
                 sql = $"select * FROM(SELECT ROW_NUMBER() OVER (ORDER BY Id) row_num, Id, LastName,FirstName, Age, [Address], Interests, ImagesBytes from People where LastName LIKE '%{filter}%' OR FirstName LIKE '%{filter}%') t Where row_num >= {startRowIndex} and row_num<({startRowIndex} + {maximumRows})";
+
+                sqlTotalRows = $"select * FROM People where LastName LIKE '%{filter}%' OR FirstName LIKE '%{filter}%'";
             }
             else
             {
                 sql = $"select * FROM(SELECT ROW_NUMBER() OVER (ORDER BY Id) row_num, Id, LastName,FirstName, Age, [Address], Interests, ImagesBytes from People) t Where row_num >= {startRowIndex} and row_num<({startRowIndex} + {maximumRows})";
+
+                sqlTotalRows = $"select * FROM People";
             }
 
-             var b = (_context.People.SqlQuery(sql.ToString())).ToList<Person>(); 
-            return (_context.People.SqlQuery(sql.ToString())).ToList<Person>();  // _context.People.ToList<Person>();
+            int total = 0;
+        
+            total = (_context.People.SqlQuery(sqlTotalRows.ToString())).Count();
+
+            PagedRecInfo pgInfo = new PagedRecInfo()
+            {
+                PagedFilteredRecords = (_context.People.SqlQuery(sql.ToString())).ToList<Person>(),
+                TotalFilterRecords = total
+            };
+
+            return pgInfo;
         }
 
         public int GetTotalDbRows()

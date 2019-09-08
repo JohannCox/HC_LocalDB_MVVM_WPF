@@ -23,7 +23,7 @@ namespace HC_LocalDB_MVVM_WPF.ViewModels
         //public PropertyChangedEventHandler PropertyChanged;
         public bool? DialogResult { get { return false; } }
 
-        public int MaximumRows { get; set; }
+        public int MaximumRows { get; set; } = 10;
 
         private int pageNum = 1;
         public int PageNum
@@ -165,8 +165,6 @@ namespace HC_LocalDB_MVVM_WPF.ViewModels
                 people = value;
                 RaisePropertyChanged("People");
             }
-
-
         }
 
         private void RaisePropertyChanged(string propertyName)
@@ -187,38 +185,27 @@ namespace HC_LocalDB_MVVM_WPF.ViewModels
             var repo = new PersonRepository();
             
             LoadFilteredData("");
-            totalCount = repo.GetTotalDbRows().ToString();
-            //var getPeople = new PersonRepository();
-            //Peoples = new ObservableCollection<Person>(getPeople.GetPeopleByPages(PageNum,MaximumRows, SearchBoxed));
-            //this.TotalCount =  String.Format(" of {0}", Peoples.Count());
+            //totalCount = repo.GetTotalDbRows().ToString();
+            repo.Dispose();
         }
 
         private void LoadFilteredData(string filter)
         {
-            
+     
             var db = new PersonContext();
             var getPeople = new PersonRepository();
 
-            if (!String.IsNullOrEmpty(filter))
+            PagedRecInfo pgRecInfo = new PagedRecInfo();
+            pgRecInfo = (getPeople.GetPeopleByPages(StartRowIndex, MaximumRows, SearchBoxed));
+
+            Peoples = new ObservableCollection<Person>(pgRecInfo.PagedFilteredRecords);
+
+            if (this.MaximumRows != 0)
             {
-                Peoples = new ObservableCollection<Person>(getPeople.GetPeopleByPages(StartRowIndex, MaximumRows, SearchBoxed));
-                this.TotalCount = String.Format(" of {0}", Peoples.Count());
-
-                //Peoples = new ObservableCollection<Person>(db.People.Where(p => (p.LastName.ToLower().Contains(SearchBoxed.ToLower())) || (p.FirstName.ToLower().Contains(SearchBoxed.ToLower()))).ToList<Person>());
-                //FilteredCount = db.People.Count(p => (p.LastName.ToLower().Contains(SearchBoxed.ToLower())) || (p.FirstName.ToLower().Contains(SearchBoxed.ToLower()))).ToString();
-            } 
-            else
-            {
-                Peoples = new ObservableCollection<Person>(getPeople.GetPeopleByPages(StartRowIndex, MaximumRows, SearchBoxed));
-                this.TotalCount = String.Format(" of {0}", Peoples.Count());
-
-                FilteredCount = Peoples.Count().ToString();
-
-                // FilteredCount = db.People.Count().ToString();
+                var modd = pgRecInfo.TotalFilterRecords % this.MaximumRows;
+                this.totalCount = String.Format(" of {0}", (modd == 0) ? pgRecInfo.TotalFilterRecords / MaximumRows : (pgRecInfo.TotalFilterRecords / MaximumRows) + 1 );
             }
-
-            //Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new Action(delegate { this.UpdateLayout(); }));
-
+            getPeople.Dispose();
         }
     }
        

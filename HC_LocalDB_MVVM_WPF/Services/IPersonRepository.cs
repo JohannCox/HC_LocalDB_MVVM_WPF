@@ -9,7 +9,7 @@ namespace HC_LocalDB_MVVM_WPF.Services
     {
         // Task<Person> AddPersonAsync(Person person);
         List<Person> GetPeople();
-        List<Person> GetPeopleByPages(int pageNum, int maximumRows, string filter);
+        PagedRecInfo GetPeopleByPages(int pageNum, int maximumRows, string filter);
         int GetTotalDbRows();
         // Task<List<Person>> RemovePersonAsync(int PersonId);
         // Task<Person> UpdatePersonAsync(Person dude);

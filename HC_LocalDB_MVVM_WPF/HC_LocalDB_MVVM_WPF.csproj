@@ -133,6 +133,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\PagedRecInfo.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\PersonContext.cs" />
     <Compile Include="PersonContextDataSet.Designer.cs">
@@ -148,7 +149,6 @@
     </Compile>
     <Compile Include="Services\IPersonRepository.cs" />
     <Compile Include="Services\PersonRepository.cs" />
-    <Compile Include="Services\Interface1.cs" />
     <Compile Include="Utils\ByteToImageConverter.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />

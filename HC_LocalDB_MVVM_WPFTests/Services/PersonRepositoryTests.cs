@@ -12,25 +12,7 @@ namespace HC_LocalDB_MVVM_WPF.Services.Tests
     public class PersonRepositoryTests
     {
         [TestMethod()]
-        public void GetPeopleAsyncTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void AddPersonAsyncTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void RemovePersonAsyncTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod()]
-        public void UpdatePersonAsyncTest()
+        public void DisposeTest()
         {
             Assert.Fail();
         }
